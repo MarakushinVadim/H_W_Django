@@ -39,8 +39,8 @@ class Product(models.Model):
     price = models.IntegerField(
         **NULLABLE, verbose_name="Цена", help_text="Введите цену"
     )
-    created_at = models.DateField(verbose_name="Дата создания записи")
-    updated_at = models.DateField(verbose_name="Дата последнего изменения")
+    created_at = models.DateField(verbose_name="Дата создания записи", **NULLABLE)
+    updated_at = models.DateField(verbose_name="Дата последнего изменения", **NULLABLE)
 
     def __str__(self):
         return f"{self.name}"
