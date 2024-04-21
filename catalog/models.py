@@ -36,8 +36,8 @@ class Product(models.Model):
         help_text="Категория продукта",
         related_name="category",
     )
-    price = models.IntegerField(
-        **NULLABLE, verbose_name="Цена", help_text="Введите цену"
+    price = models.CharField(
+        max_length=100, **NULLABLE, verbose_name="Цена", help_text="Введите цену"
     )
     created_at = models.DateField(verbose_name="Дата создания записи", **NULLABLE)
     updated_at = models.DateField(verbose_name="Дата последнего изменения", **NULLABLE)

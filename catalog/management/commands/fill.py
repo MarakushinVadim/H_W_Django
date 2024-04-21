@@ -10,7 +10,7 @@ class Command(BaseCommand):
     @staticmethod
     def json_read_categories():
         category_list = []
-        with open('catalog_data.json', encoding='UTF-16') as file:
+        with open('catalog/management/commands/catalog_data.json', encoding='UTF-16') as file:
             category = json.load(file)
             for unit in category:
                 if unit['model'] == 'catalog.category':
@@ -20,7 +20,7 @@ class Command(BaseCommand):
     @staticmethod
     def json_read_products():
         product_list = []
-        with open('catalog_data.json', encoding='UTF-16') as file:
+        with open('catalog/management/commands/catalog_data.json', encoding='UTF-16') as file:
             category = json.load(file)
             for unit in category:
                 if unit['model'] == 'catalog.product':
@@ -44,7 +44,7 @@ class Command(BaseCommand):
 
         for product in Command.json_read_products():
             product_for_create.append(
-                Category(
+                Product(
                     id=product['pk'],
                     name=product['fields']['name'],
                     description=product['fields']['name'],
@@ -53,4 +53,5 @@ class Command(BaseCommand):
                     price=product['fields']['price'],
                          )
             )
-        Category.objects.bulk_create(product_for_create)
+        Product.objects.bulk_create(product_for_create)
+
