@@ -10,3 +10,15 @@ def media_filter(path):
     return "#"
 
 
+@register.filter()
+def description_filter(description):
+    if len(description) > 100:
+        return f'{description[:97]}...'
+    return description
+
+
+@register.filter()
+def name_filter(name):
+    if len(name) > 21:
+        return f'{name[:18]}...'
+    return name

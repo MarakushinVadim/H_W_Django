@@ -13,12 +13,14 @@
         <div class="col">
             <div class="card text-center" style="width: 18rem;">
 
-                <img src= "{{ product.photo | media_filter }}"
-                     class="card-img-top" alt="">
+                <img src="{{ product.photo | media_filter }}"
+                     class="card-img-top"
+                     alt="">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
+                    <h4 class="my-0 font-weight-normal">{{ product.name | name_filter}}</h4>
                 </div>
                 <div class="card-body">
+                    <p class="fst-italic">{{ product.description | description_filter }}</p>
                     <h1 class="card-title pricing-card-title">{{ product.price }} руб.</h1>
 
                     <button type="button" class="btn btn-lg btn btn-outline-warning">Купить</button>
