@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% load my_tags %}
 {% block content %}
+
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Skystore</h1>
     <p class="lead">Это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели
@@ -9,11 +9,10 @@
 
 <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for product in products %}
         <div class="col">
             <div class="card text-center" style="width: 18rem;">
 
-                <img src= "{{ product.photo | media_filter }}"
+                <img src="{{ product.photo }}"
                      class="card-img-top" alt="">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
@@ -26,7 +25,7 @@
 
             </div>
         </div>
-        {% endfor %}
     </div>
 </div>
+
 {% endblock %}
