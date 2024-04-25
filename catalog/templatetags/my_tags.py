@@ -8,3 +8,4 @@ def media_filter(path):
     if path:
         return f"media/{path}"
     return "#"
+
