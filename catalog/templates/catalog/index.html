@@ -22,7 +22,8 @@
                 <div class="card-body">
                     <p class="fst-italic">{{ product.description | description_filter }}</p>
                     <h1 class="card-title pricing-card-title">{{ product.price }} руб.</h1>
-
+                    <a type="button" class="btn btn-lg btn btn-outline-warning"
+                       href="{% url 'catalog:product_detail' product.pk %}">Подробнее</a>
                     <button type="button" class="btn btn-lg btn btn-outline-warning">Купить</button>
                 </div>
 

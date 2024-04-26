@@ -8,12 +8,7 @@
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 <body>
-<div class="h1 pb-2 mb-4 text-body-secondary border-bottom border-black">
-    Skystore
-
-    <a type="button" class="btn btn-secondary" href="/">Каталог</a>
-    <a type="button" class="btn btn-secondary" href="contact_info">Контакты</a>
-</div>
+{% include 'includes/inc_menu.html' %}
 
 {% block content %}
 {% endblock %}
