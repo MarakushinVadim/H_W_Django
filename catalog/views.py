@@ -1,30 +1,58 @@
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
+from pytils.translit import slugify
 
-from catalog.models import Product
-
-
-def index(request):
-    products = Product.objects.all()
-    context = {"products":products}
-    return render(request, "catalog/index.html", context)
+from catalog.models import Product, Blog
 
 
-def contact_info(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
-        phone = request.POST.get("phone")
-        message = request.POST.get("message")
-
-        print(f"Имя - {name}")
-        print(f"Номер телефона - {phone}")
-        print(f"Сообщение - {message}")
-    return render(request, "catalog/contact_info.html")
+class ProductListView(ListView):
+    model = Product
 
 
-def base(request):
-    return render(request, 'base.html')
+class ContactInfoView(TemplateView):
+    template_name = 'catalog/contact_info.html'
 
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    context = {"product": product}
-    return render(request, 'catalog/product_detail.html', context)
+
+class BaseView(TemplateView):
+    template_name = 'base.html'
+
+
+class ProductDetailView(DetailView):
+    model = Product
+
+class BlogListView(ListView):
+    model = Blog
+
+
+class BlogDetailView(DetailView):
+    model = Blog
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        self.object.views_count += 1
+        self.object.save()
+        return self.object
+
+class BlogCreateView(CreateView):
+    model = Blog
+    fields = ('title', 'slug', 'content', 'preview', 'create_at', 'is_published', 'views_count')
+    success_url = reverse_lazy('catalog:blog_list')
+
+    def form_valid(selfl, form):
+        if form.is_valid():
+            new_blog = form.save()
+            new_blog.slug = slugify(new_blog.title)
+            new_blog.save()
+
+        return super().form_valid(form)
+
+class BlogUpdateView(UpdateView):
+    model = Blog
+    fields = ('title', 'slug', 'content', 'preview', 'create_at', 'is_published', 'views_count')
+    success_url = reverse_lazy('catalog:blog_list')
+
+
+class BlogDeleteView(DeleteView):
+    model = Blog
+    success_url = reverse_lazy('catalog:blog_list')

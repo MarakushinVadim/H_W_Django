@@ -7,12 +7,15 @@
         <div class="card mb-3" style="max-width: 540px;">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <img src="{{ product.photo | media_filter }}" class="img-fluid rounded-start" alt="...">
+                    <img src="{{ object.preview | media_filter }}" class="img-fluid rounded-start" alt="...">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title">{{ object.name }}</h5>
-                        <p class="card-text">{{ object.description }}</p>
+                        <h5 class="card-title">{{ object.title }}</h5>
+                        <p class="card-text">{{ object.content }}</p>
+                        <p class="card-text">Опубликовано - {{ object.create_at }}</p>
+                        <p class="card-text">Просмотров - {{ object.views_count }}</p>
+
                         <a type="button" class="btn btn-lg btn btn-outline-warning" href="#">Купить</a>
                     </div>
                 </div>
