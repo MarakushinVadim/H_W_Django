@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 
@@ -36,7 +36,7 @@ class BlogDetailView(DetailView):
 
 class BlogCreateView(CreateView):
     model = Blog
-    fields = ('title', 'slug', 'content', 'preview', 'create_at', 'is_published', 'views_count')
+    fields = ('title', 'content', 'preview', 'create_at')
     success_url = reverse_lazy('catalog:blog_list')
 
     def form_valid(selfl, form):
@@ -49,9 +49,19 @@ class BlogCreateView(CreateView):
 
 class BlogUpdateView(UpdateView):
     model = Blog
-    fields = ('title', 'slug', 'content', 'preview', 'create_at', 'is_published', 'views_count')
-    success_url = reverse_lazy('catalog:blog_list')
+    fields = ('title', 'content', 'preview', 'create_at', 'is_published')
 
+
+    def form_valid(selfl, form):
+        if form.is_valid():
+            new_blog = form.save()
+            new_blog.slug = slugify(new_blog.title)
+            new_blog.save()
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('catalog:blog_detail', args=[self.kwargs.get('pk')])
 
 class BlogDeleteView(DeleteView):
     model = Blog

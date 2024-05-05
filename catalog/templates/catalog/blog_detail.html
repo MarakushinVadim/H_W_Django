@@ -2,26 +2,25 @@
 {% load my_tags %}
 {% block content %}
 
-<div class="container-fluid">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="{{ object.preview | media_filter }}" class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ object.title }}</h5>
-                        <p class="card-text">{{ object.content }}</p>
-                        <p class="card-text">Опубликовано - {{ object.create_at }}</p>
-                        <p class="card-text">Просмотров - {{ object.views_count }}</p>
-
-                        <a type="button" class="btn btn-lg btn btn-outline-warning" href="#">Купить</a>
+<div class="container">
+    <div class="row ">
+        <div class="col-12">
+            <div class="card" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ object.preview | media_filter }}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ object.title }}</h5>
+                            <p class="card-text">{{ object.content }}</p>
+                            <p class="card-text">Опубликовано - {{ object.create_at }}</p>
+                            <p class="card-text">Просмотров - {{ object.views_count }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 {% endblock %}
