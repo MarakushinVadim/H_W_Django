@@ -9,28 +9,22 @@
 
 <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for product in object_list %}
+        {% for version in object_list %}
         <div class="col">
             <div class="card text-center" style="width: 18rem;">
 
-                <img src="{{ product.photo | media_filter }}"
-                     class="card-img-top"
-                     alt="">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ product.name | name_filter}}</h4>
+                    <h4 class="my-0 font-weight-normal">{{ version.version_number }}</h4>
                 </div>
                 <div class="card-body">
-                    <p class="fst-italic">{{ product.description | description_filter }}</p>
-                    <h1 class="card-title pricing-card-title">{{ product.price }} руб.</h1>
+                    <p class="fst-italic">{{ version.version_name | name_filter }}</p>
+                    <h1 class="card-title pricing-card-title">{{ version.product }} руб.</h1>
                     <a type="button" class="btn btn-lg btn btn-outline-warning"
-                       href="{% url 'catalog:product_detail' product.pk %}">Подробнее</a>
+                       href="{% url 'catalog:version_detail' version.pk %}">Подробнее</a>
                     <a type="button" class="btn btn-lg btn btn-outline-warning"
-                       href="{% url 'catalog:product_update' product.pk %}">Изменить</a>
+                       href="{% url 'catalog:version_update' version.pk %}">Изменить</a>
                     <a type="button" class="btn btn-lg btn btn-outline-warning"
-                       href="{% url 'catalog:product_delete' product.pk %}">Удалить</a>
-                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                        <li>- Активная версия: {{ product.active_version }}</li>
-                    </ul>
+                       href="{% url 'catalog:version_delete' version.pk %}">Удалить</a>
                 </div>
 
             </div>
@@ -38,4 +32,5 @@
         {% endfor %}
     </div>
 </div>
+<a type="button" class="btn btn-secondary" href="{% url 'catalog:version_create' %}">Добавить версию</a>
 {% endblock %}

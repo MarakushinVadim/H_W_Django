@@ -1,0 +1,21 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ object.version_number }}</h5>
+                        <p class="card-text">{{ object.product }}</p>
+                        <p class="card-text">{{ object.is_current }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
