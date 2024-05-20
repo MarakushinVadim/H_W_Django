@@ -90,3 +90,12 @@ class Version(models.Model):
         verbose_name="Признак версии",
         help_text="Укажите признак версии"
     )
+
+
+    def __str__(self):
+        return f"{self.version_number}"
+
+
+    class Meta:
+        verbose_name = 'Версия'
+        verbose_name_plural = 'Версии'
