@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
@@ -26,13 +27,23 @@ class ProductListView(ListView):
         context_data['object_list'] = products
         return context_data
 
-class ProductCreateView(CreateView):
+
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:index')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.owner = self.request.user
+        self.object.save()
 
-class ProductUpdateView(UpdateView):
+        form.instance.user = self.request.user
+
+        return super().form_valid(form)
+
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:index')
@@ -59,9 +70,21 @@ class ProductUpdateView(UpdateView):
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:index')
+
+
+class ContactInfoView(TemplateView):
+    template_name = 'catalog/contact_info.html'
+
+
+class BaseView(TemplateView):
+    template_name = 'base.html'
+
+
+class ProductDetailView(LoginRequiredMixin, DetailView):
+    model = Product
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -76,19 +99,6 @@ class ProductDeleteView(DeleteView):
         context['version'] = product.active_version
         context['version_list'] = versions
         return context
-
-
-class ContactInfoView(TemplateView):
-    template_name = 'catalog/contact_info.html'
-
-
-class BaseView(TemplateView):
-    template_name = 'base.html'
-
-
-class ProductDetailView(DetailView):
-    model = Product
-
 
 class BlogListView(ListView):
     model = Blog
