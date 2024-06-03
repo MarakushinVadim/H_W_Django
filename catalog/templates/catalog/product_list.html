@@ -10,6 +10,7 @@
 <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         {% for product in object_list %}
+        {% if product.is_published or user == product.owner or perms.catalog.can_edit_product %}
         <div class="col">
             <div class="card text-center" style="width: 18rem;">
 
@@ -24,8 +25,10 @@
                     <h1 class="card-title pricing-card-title">{{ product.price }} руб.</h1>
                     <a type="button" class="btn btn-lg btn btn-outline-warning"
                        href="{% url 'catalog:product_detail' product.pk %}">Подробнее</a>
+                    {% if perms.catalog.can_edit_product and perms.catalog.can_edit_description and perms.catalog.can_edit_category or user == product.owner %}
                     <a type="button" class="btn btn-lg btn btn-outline-warning"
                        href="{% url 'catalog:product_update' product.pk %}">Изменить</a>
+                    {% endif %}
                     <a type="button" class="btn btn-lg btn btn-outline-warning"
                        href="{% url 'catalog:product_delete' product.pk %}">Удалить</a>
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
@@ -35,6 +38,7 @@
 
             </div>
         </div>
+        {% endif %}
         {% endfor %}
     </div>
 </div>
