@@ -50,6 +50,7 @@ class Product(models.Model):
         **NULLABLE,
         on_delete=models.SET_NULL
     )
+    is_published = models.BooleanField(default=False)
 
 
     def __str__(self):
@@ -58,7 +59,12 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
-        ordering = ["category", "name"]
+        ordering = ["category", "name", "is_published"]
+        permissions = [
+            ('can_edit_product', 'can cancel product'),
+            ('can_edit_description', 'can change description product'),
+            ('can_edit_category', 'can change category product')
+        ]
 
 
 class Blog(models.Model):
