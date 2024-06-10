@@ -1,0 +1,21 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Skystore</h1>
+    <p class="lead">Это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели
+        продать</p>
+</div>
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+            {% for category in object_list %}
+            <li>- Имя: {{ category.name }}</li>
+            <li>- Описание: {{ category.description }}</li>
+            <br>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -6,7 +6,8 @@ from django.views.generic import ListView, DetailView, TemplateView, CreateView,
 from pytils.translit import slugify
 
 from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
-from catalog.models import Product, Blog, Version
+from catalog.models import Product, Blog, Version, Category
+from catalog.services import get_category_from_cache
 
 
 class ProductListView(ListView):
@@ -98,7 +99,7 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         product = self.get_object()
-        versions = Version.objects.filter(name=product)
+        versions = Version.objects.filter(product=product)
         active_versions = versions.filter(is_current=True)
         if active_versions:
             product.active_version = active_versions.last().version_name
@@ -188,3 +189,10 @@ class VersionListView(ListView):
 class VersionDetailView(DetailView):
     model = Version
     success_url = reverse_lazy('catalog:index')
+
+
+class CategoryListView(ListView):
+    model = Category
+
+    def get_queryset(self):
+        return get_category_from_cache()
